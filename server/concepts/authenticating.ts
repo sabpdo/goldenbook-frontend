@@ -18,7 +18,6 @@ export default class AuthenticatingConcept {
    */
   constructor(collectionName: string) {
     this.users = new DocCollection<UserDoc>(collectionName);
-
     // Create index on username to make search queries for it performant
     void this.users.collection.createIndex({ username: 1 });
   }
@@ -57,6 +56,11 @@ export default class AuthenticatingConcept {
     // Store strings in Map because ObjectId comparison by reference is wrong
     const idToUser = new Map(users.map((user) => [user._id.toString(), user]));
     return ids.map((id) => idToUser.get(id.toString())?.username ?? "DELETED_USER");
+  }
+
+  async idToUsername(id: ObjectId) {
+    const user = await this.users.readOne({ _id: id });
+    return user?.username ?? "DELETED_USER";
   }
 
   async getUsers(username?: string) {
