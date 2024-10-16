@@ -19,16 +19,16 @@ const deleteRecord = async () => {
 </script>
 
 <template>
-  <p class="author">{{ props.record.receiver }}</p>
+  <p class="author">{{ props.record.recorder }}</p>
   <p>{{ props.record.content }}</p>
   <div class="base">
-    <menu v-if="props.record.receiver == currentUsername">
+    <p>Action Recorded: {{ props.record.action }}</p>
+    <menu v-if="props.record.recorder == currentUsername">
       <li><button class="btn-small pure-button" @click="emit('editRecord', props.record._id)">Edit</button></li>
       <li><button class="button-error btn-small pure-button" @click="deleteRecord">Delete</button></li>
     </menu>
     <article class="timestamp">
-      <p v-if="props.record.dateCreated !== props.record.dateUpdated">Edited on: {{ formatDate(props.record.dateUpdated) }}</p>
-      <p v-else>Created on: {{ formatDate(props.record.dateCreated) }}</p>
+      <p>Created on: {{ formatDate(props.record.time) }}</p>
     </article>
   </div>
 </template>

@@ -395,6 +395,12 @@ class Routes {
     return await Recording.stopAutomaticRecording(user, "Post");
   }
 
+  @Router.get("/records/automatic")
+  async getAutomaticTrackingStatus(session: SessionDoc) {
+    const user = Sessioning.getUser(session);
+    return { isTrackingMessage: await Recording.isAutomatic(user, "Message"), isTrackingPosting: await Recording.isAutomatic(user, "Post") };
+  }
+
   /**
    * Gets the actions that the parametrized user with the given username is denied from performing.
    * @returns a list of denied actions
