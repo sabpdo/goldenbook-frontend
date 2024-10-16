@@ -6,6 +6,8 @@ import HomeView from "../views/HomeView.vue";
 import LoginView from "../views/LoginView.vue";
 import NotFoundView from "../views/NotFoundView.vue";
 import SettingView from "../views/SettingView.vue";
+import StreakTrackingView from "../views/StreakTrackingView.vue";
+import MessageView from "../views/MessageView.vue";
 
 const router = createRouter({
   history: createWebHistory(),
@@ -32,6 +34,18 @@ const router = createRouter({
           return { name: "Settings" };
         }
       },
+    },
+    {
+      path: "/streaks",
+      name: "Streak Tracking",
+      component: StreakTrackingView,
+      meta: { requiresAuth: true },
+    },
+    {
+      path: "/messages",
+      name: "Messages",
+      component: MessageView,
+      meta: { requiresAuth: true },
     },
     {
       path: "/:catchAll(.*)",

@@ -21,7 +21,7 @@ async function getRecords(receiver?: string) {
 }
 
 onBeforeMount(async () => {
-  await getRecords(currentUsername);
+  await getRecords(currentUsername.value);
   loaded.value = true;
 });
 </script>
