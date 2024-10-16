@@ -4,7 +4,7 @@ import DocCollection, { BaseDoc } from "../framework/doc";
 import { BadValuesError, NotAllowedError, NotFoundError } from "./errors";
 
 export interface NudgeDoc extends BaseDoc {
-  action: String;
+  action: string;
   time: Date;
   to: ObjectId;
   from: ObjectId;

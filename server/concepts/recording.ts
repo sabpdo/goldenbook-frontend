@@ -5,13 +5,13 @@ import { NotAllowedError, NotFoundError } from "./errors";
 
 export interface RecordDoc extends BaseDoc {
   user: ObjectId;
-  action: String;
+  action: string;
   time: Date;
 }
 
 export interface AutomaticRecordDoc extends BaseDoc {
   user: ObjectId;
-  autotracked_action: String;
+  autotracked_action: string;
 }
 
 /**
@@ -51,7 +51,7 @@ export default class RecordingConcept {
   /**
    * Gets all records with the given action.
    */
-  async getByAction(action: String) {
+  async getByAction(action: string) {
     return await this.records.readMany({ action: action });
   }
 

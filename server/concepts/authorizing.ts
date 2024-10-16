@@ -1,11 +1,11 @@
 import { ObjectId } from "mongodb";
 
 import DocCollection, { BaseDoc } from "../framework/doc";
-import { BadValuesError, NotAllowedError, NotFoundError } from "./errors";
+import { NotAllowedError, NotFoundError } from "./errors";
 
 export interface AuthorizationDoc extends BaseDoc {
   user: ObjectId;
-  denied_action: String;
+  denied_action: string;
 }
 
 export interface UserControlMapDoc extends BaseDoc {
@@ -28,7 +28,7 @@ export default class AuthorizingConcept {
     this.user_control_map = new DocCollection<UserControlMapDoc>(collectionName + "_control_map");
   }
 
-  async allow(user: ObjectId, denied_action: String) {
+  async allow(user: ObjectId, denied_action: string) {
     const denied = await this.denied_actions.readOne({ user, denied_action });
     if (!denied) {
       throw new AlreadyAllowedError(denied_action, user);
@@ -37,7 +37,7 @@ export default class AuthorizingConcept {
     return { msg: "Action successfully allowed!", user: user, action: denied_action };
   }
 
-  async deny(user: ObjectId, denied_action: String) {
+  async deny(user: ObjectId, denied_action: string) {
     const denied = await this.denied_actions.readOne({ user, denied_action });
     if (denied) {
       throw new AlreadyDeniedError(denied_action, user);
@@ -52,7 +52,7 @@ export default class AuthorizingConcept {
       throw new AuthorizerAlreadyExistsError(authorizer, authorizee);
     }
     const _id = await this.user_control_map.createOne({ authorizer, authorizee });
-    return { msg: "Control successfully given!", permission_control: await this.user_control_map.readOne({ _id })};
+    return { msg: "Control successfully given!", permission_control: await this.user_control_map.readOne({ _id }) };
   }
 
   async removeAuthorizer(authorizer: ObjectId, authorizee: ObjectId) {
@@ -70,12 +70,12 @@ export default class AuthorizingConcept {
 
   async getAuthorizeesByAuthorizer(authorizer: ObjectId) {
     const authorizees = await this.user_control_map.readMany({ authorizer });
-    return (authorizees) ? authorizees : [];
+    return authorizees ? authorizees : [];
   }
 
   async getAuthorizersByAuthorizee(authorizee: ObjectId) {
     const authorizers = await this.user_control_map.readMany({ authorizee });
-    return (authorizers) ? authorizers : [];
+    return authorizers ? authorizers : [];
   }
 
   async assertIsAuthorizer(authorizer: ObjectId, authorizee: ObjectId) {
@@ -85,19 +85,18 @@ export default class AuthorizingConcept {
     }
   }
 
-  async assertActionIsAllowed(user: ObjectId, denied_action: String) {
+  async assertActionIsAllowed(user: ObjectId, denied_action: string) {
     const denied = await this.denied_actions.readOne({ user, denied_action });
     if (denied) {
       throw new UnauthorizedActionError(user, denied_action);
     }
-  } 
-} 
-
+  }
+}
 
 export class UnauthorizedActionError extends NotAllowedError {
   constructor(
     public readonly user: ObjectId,
-    public readonly action: String,
+    public readonly action: string,
   ) {
     super("{0} is not allowed to perform action {1}!", user, action);
   }
@@ -123,7 +122,7 @@ export class AuthorizerNotFoundError extends NotFoundError {
 
 export class AlreadyAllowedError extends NotAllowedError {
   constructor(
-    public readonly action: String,
+    public readonly action: string,
     public readonly authorizee: ObjectId,
   ) {
     super("Action {0} already is allowed for user {1}!", action, authorizee);
@@ -132,7 +131,7 @@ export class AlreadyAllowedError extends NotAllowedError {
 
 export class AlreadyDeniedError extends NotAllowedError {
   constructor(
-    public readonly action: String,
+    public readonly action: string,
     public readonly authorizee: ObjectId,
   ) {
     super("Action {0} already is denied for user {1}!", action, authorizee);
