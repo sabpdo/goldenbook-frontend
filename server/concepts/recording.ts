@@ -63,8 +63,8 @@ export default class RecordingConcept {
   /**
    *  Determines if the action is automatic.
    */
-  async isAutomatic(user: ObjectId, action: string) {
-    return (await this.autotracked_records.readOne({ user, action })) != null;
+  async isAutomatic(user: ObjectId, autotracked_action: string) {
+    return (await this.autotracked_records.readOne({ user, autotracked_action })) != null;
   }
 
   /**

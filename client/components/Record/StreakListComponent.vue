@@ -5,6 +5,7 @@ import { storeToRefs } from "pinia";
 import { onBeforeMount, ref } from "vue";
 import CalendarActionComponent from "./CalendarActionComponent.vue";
 import StartStreakForm from "./StartStreakForm.vue";
+import CreateRecordForm from "./CreateRecordForm.vue";
 
 const { currentUsername, isLoggedIn } = storeToRefs(useUserStore());
 const loaded = ref(false);
@@ -42,11 +43,14 @@ onBeforeMount(async () => {
 <template>
   <section v-if="isLoggedIn">
     <section class="record-actions">
-      <StartStreakForm @refreshRecords="getRecords" />
+      <StartStreakForm @refreshRecords="getRecords(currentUsername)" />
+    </section>
+    <section class="record-actions">
+      <CreateRecordForm @refreshRecords="getRecords(currentUsername)" />
     </section>
     <section class="records-list" v-if="loaded">
-      <div v-if="Object.keys(groupedRecords).length === 0">No records found</div>
-      <div v-else>
+      <div v-if="Object.keys(groupedRecords).length === 0" class="no-records">No records found</div>
+      <div v-else class="grouped-records">
         <CalendarActionComponent v-for="(records, action) in groupedRecords" :key="action" :action="action" :records="records" />
       </div>
     </section>
@@ -54,4 +58,49 @@ onBeforeMount(async () => {
   </section>
 </template>
 
-<style scoped></style>
+<style scoped>
+.records-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.calendar {
+  display: flex;
+  flex-direction: column;
+}
+
+section {
+  padding: 16px;
+  font-family: Arial, sans-serif;
+}
+
+.record-actions {
+  margin-bottom: 10px;
+}
+
+.no-records {
+  color: black;
+  text-align: center;
+  font-size: 40px;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.grouped-records {
+  display: flex;
+  flex-wrap: wrap;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1em;
+}
+
+.grouped-records > * {
+  align-self: start;
+}
+
+.loading {
+  text-align: center;
+  font-size: 16px;
+  color: #888;
+}
+</style>
