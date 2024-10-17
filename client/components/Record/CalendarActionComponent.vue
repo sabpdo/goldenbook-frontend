@@ -10,11 +10,9 @@ const props = defineProps<{
 const actionDates = computed(() => {
   const dateSet = new Set<string>();
   props.records.forEach((record) => {
-    console.log(record);
-    const formattedDate = formatDateByDay(new Date(record));
+    const formattedDate = formatDateByDay(new Date(record as unknown as string));
     dateSet.add(formattedDate);
   });
-  console.log(dateSet);
   return dateSet;
 });
 
