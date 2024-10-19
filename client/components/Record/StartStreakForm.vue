@@ -22,25 +22,21 @@ onMounted(async () => {
 
 const startTrackingMessaging = async () => {
   try {
-    isTrackingMessaging.value = true;
     await fetchy("/api/records/automatic/message", "POST");
-    await getTrackingStatus();
   } catch (_) {
-    isTrackingMessaging.value = false;
     return;
   }
+  await getTrackingStatus();
   emit("refreshRecords");
 };
 
 const stopTrackingMessaging = async () => {
   try {
-    isTrackingMessaging.value = false;
     await fetchy("/api/records/automatic/message", "DELETE");
-    await getTrackingStatus();
   } catch (_) {
-    isTrackingMessaging.value = true;
     return;
   }
+  await getTrackingStatus();
   emit("refreshRecords");
 };
 
@@ -48,23 +44,20 @@ const startTrackingPosting = async () => {
   try {
     isTrackingPosting.value = true;
     await fetchy("/api/records/automatic/post", "POST");
-    await getTrackingStatus();
   } catch (_) {
-    isTrackingPosting.value = false;
     return;
   }
+  await getTrackingStatus();
   emit("refreshRecords");
 };
 
 const stopTrackingPosting = async () => {
   try {
-    isTrackingPosting.value = false;
     await fetchy("/api/records/automatic/post", "DELETE");
-    await getTrackingStatus();
   } catch (_) {
-    isTrackingPosting.value = true;
     return;
   }
+  await getTrackingStatus();
   emit("refreshRecords");
 };
 </script>
@@ -85,36 +78,16 @@ const stopTrackingPosting = async () => {
 <style scoped>
 .tracking-section {
   display: flex;
-  justify-content: left;
-  padding: 1em;
-  border-radius: 1em;
-  width: 100%;
-  max-width: 600px;
-  margin: 0 auto;
 }
 
 .tracking-group {
   display: flex;
-  gap: 1em;
-  padding: 0.5em;
-}
-
-.tracking-button {
-  padding: 0.75em 1.5em;
-  background-color: var(--base-bg);
-  color: black;
-  border: none;
-  border-radius: 0.5em;
-  font-size: 1.1em;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.tracking-button:hover {
-  background-color: darkgrey;
+  gap: 0.5em;
+  padding: 1em;
 }
 
 .tracking-button.active {
-  background-color: dark grey;
+  background-color: var(--green);
+  color: white;
 }
 </style>

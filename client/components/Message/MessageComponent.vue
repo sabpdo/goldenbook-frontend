@@ -28,7 +28,7 @@ const deleteMessage = async () => {
       <p
         class="message-content"
         :style="{
-          backgroundColor: props.message.from == currentUsername ? 'lightblue' : 'lightgrey',
+          backgroundColor: props.message.from == currentUsername ? '#93ddd1' : 'lightgrey',
         }"
       >
         {{ props.message.content }}
@@ -53,6 +53,7 @@ const deleteMessage = async () => {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  margin-left: 10px;
 }
 
 .message-wrapper {

@@ -50,11 +50,11 @@ onBeforeMount(async () => {
           <h3>To: {{ toUser }}</h3>
           <div class="nudge-form">
             <SendNudgeForm :toUser="toUser" />
-          </div>
+        </div>
         </div>
         <h1>Messages</h1>
         <section v-if="messages.length === 0">
-          <p>No messages yet</p>
+          <p>No message history</p>
         </section>
         <article v-for="message in messages" :key="message._id" class="message-container">
           <MessageComponent :message="message" @refreshMessages="getMessages(currentUsername)" />
@@ -83,8 +83,9 @@ h1 {
 
 .sidebar {
   width: 250px;
-  background-color: #f4f4f4;
+  background-color: var(--light-pastel-grey);
   border-right: 1px solid #ddd;
+  border: 2px solid var(--green);
   height: 100%;
   overflow-y: auto;
 }
@@ -93,26 +94,32 @@ h1 {
   flex: 1;
   display: flex;
   flex-direction: column;
-  padding: 20px;
-  background-color: #fff;
+  background-color: var(--white);
   height: 100%;
 }
 .send-message {
   position: fixed;
   bottom: 0;
-  left: 300px;
+  left: 295px;
   right: 0;
-  background-color: #fff;
-  padding: 10px;
+  background-color: var(--white);
   box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
   z-index: 10;
+  padding: 10px;
 }
 .nudges-section {
   height: 80px;
-  background-color: #f4f4f4;
+  background-color: var(--light-pastel-grey);
   display: flex;
   align-items: center;
   border-bottom: 1px solid #ddd;
   width: 100%;
+}
+
+h3 {
+  padding: 15px;
+}
+p {
+  margin-left: 10px;
 }
 </style>

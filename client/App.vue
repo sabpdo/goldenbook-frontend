@@ -37,7 +37,7 @@ onBeforeMount(async () => {
           <RouterLink :to="{ name: 'Home' }" :class="{ underline: currentRouteName == 'Home' }"> Home </RouterLink>
         </li>
         <li v-if="isLoggedIn">
-          <RouterLink :to="{ name: 'Streak Tracking' }" :class="{ underline: currentRouteName == 'Streak Tracking' }"> Streak Tracking </RouterLink>
+          <RouterLink :to="{ name: 'Habit Tracking' }" :class="{ underline: currentRouteName == 'Habit Tracking' }"> Habit Tracking </RouterLink>
           <RouterLink :to="{ name: 'Messages' }" :class="{ underline: currentRouteName == 'Messages' }"> Messages </RouterLink>
           <RouterLink :to="{ name: 'Settings' }" :class="{ underline: currentRouteName == 'Settings' }"> Settings </RouterLink>
           <RouterLink :to="{ name: 'Profile' }" :class="{ underline: currentRouteName == 'Profile' }"> Profile </RouterLink>
@@ -59,9 +59,10 @@ onBeforeMount(async () => {
 
 nav {
   padding: 1em 2em;
-  background-color: lightgray;
+  background-color: var(--white);
   display: flex;
   align-items: center;
+  border-bottom: 1px solid black;
 }
 
 h1 {
@@ -83,6 +84,7 @@ a {
   font-size: large;
   color: black;
   text-decoration: none;
+  padding: 0.25em;
 }
 
 ul {
@@ -93,7 +95,6 @@ ul {
   flex-direction: row;
   gap: 1em;
 }
-
 .underline {
   text-decoration: underline;
 }

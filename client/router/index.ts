@@ -38,7 +38,7 @@ const router = createRouter({
     },
     {
       path: "/streaks",
-      name: "Streak Tracking",
+      name: "Habit Tracking",
       component: StreakTrackingView,
       meta: { requiresAuth: true },
     },

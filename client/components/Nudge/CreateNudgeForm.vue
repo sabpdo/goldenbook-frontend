@@ -27,20 +27,14 @@ const emptyForm = () => {
   <form @submit.prevent="createNudge(time, props.toUser)">
     <label for="time">Nudge At Time:</label>
     <input id="time" v-model="time" type="datetime-local" required />
-    <button type="submit" class="pure-button-primary pure-button">Send</button>
+    <button type="submit">Send</button>
   </form>
 </template>
 
 <style scoped>
 .nudge-form {
-  border-radius: 1em;
-  display: flex;
-  flex-direction: column;
-  gap: 1em;
-  padding: 1.5em;
-  background-color: #f9f9f9;
+  background: linear-gradient(135deg, #e0f7fa, #80deea);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  width: 300px;
 }
 
 label {
@@ -54,18 +48,16 @@ input[type="datetime-local"] {
   border-radius: 0.5em;
   padding: 0.5em;
 }
-
 button {
-  align-self: flex-start;
-  padding: 0.5em 1em;
-  border-radius: 0.5em;
-  background-color: #007bff;
-  color: #fff;
+  background: var(--green);
+  color: white;
   border: none;
+  border-radius: 10px;
   cursor: pointer;
+  padding: 10px 15px;
+  transition: background 0.3s;
 }
-
 button:hover {
-  background-color: #0056b3;
+  background: var(--nav-green);
 }
 </style>

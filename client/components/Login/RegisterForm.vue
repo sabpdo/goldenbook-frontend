@@ -28,7 +28,7 @@ async function register() {
         <input type="password" v-model.trim="password" id="aligned-password" placeholder="Password" required />
       </div>
       <div class="pure-controls">
-        <button type="submit" class="pure-button pure-button-primary">Register</button>
+        <button type="submit">Register</button>
       </div>
     </fieldset>
   </form>
@@ -38,5 +38,20 @@ async function register() {
 h3 {
   display: flex;
   justify-content: center;
+}
+.pure-control-group {
+  display: flex;
+  flex-direction: column;
+  margin-left: 40px;
+}
+
+.pure-control-group label {
+  margin-bottom: 4px;
+  text-align: left;
+}
+
+.pure-control-group input {
+  margin-right: 2px;
+  width: 100%;
 }
 </style>

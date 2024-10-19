@@ -44,11 +44,11 @@ function selectUser(username: string) {
 <style scoped>
 .sidebar {
   width: 250px;
-  background-color: #f4f4f4;
   border-right: 1px solid #ddd;
   height: 100vh;
   overflow-y: auto;
   padding: 20px;
+  background: linear-gradient(135deg, #e0f7fa, #80deea);
 }
 .sidebar h2 {
   margin: 0 0 20px;
@@ -62,25 +62,28 @@ function selectUser(username: string) {
 }
 
 .user-block {
-  background-color: #ffffff;
   border: 1px solid #ddd;
-  border-radius: 10px;
+  border-radius: 15px;
   padding: 15px;
   margin-bottom: 10px;
   cursor: pointer;
+  background: var(--pastel-white);
   transition:
     background-color 0.3s,
     transform 0.2s;
 }
 
 .user-block:hover {
-  background-color: #e0e0e0;
+  background: var(--light-pastel-grey);
   transform: scale(1.02);
+  border: 2px solid var(--green);
+  border-radius: 20px;
 }
 
 .selected {
-  background-color: #d0d0ff;
   font-weight: bold;
   color: #000;
+  border: 2px solid var(--green);
+  border-radius: 20px;
 }
 </style>

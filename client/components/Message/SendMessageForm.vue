@@ -31,6 +31,7 @@ const emptyForm = () => {
 .message-form {
   display: flex;
   align-items: flex-start;
+  border: 2px solid var(--green);
 }
 
 .message-input {
@@ -38,12 +39,11 @@ const emptyForm = () => {
   resize: none;
   padding: 10px;
   border: 1px solid #ddd;
-  border-radius: 5px;
   margin-right: 10px;
 }
 
 .send-button {
-  background: #45a049;
+  background: var(--green);
   color: white;
   border: none;
   border-radius: 5px;
@@ -53,6 +53,6 @@ const emptyForm = () => {
 }
 
 .send-button:hover {
-  background: #45a049;
+  background: var(--nav-green);
 }
 </style>

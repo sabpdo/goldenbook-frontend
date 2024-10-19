@@ -40,7 +40,6 @@ const emptyForm = () => {
 
 <style scoped>
 form {
-  background-color: var(--base-bg);
   border-radius: 2em;
   display: flex;
   flex-direction: column;

@@ -44,8 +44,6 @@ onBeforeMount(async () => {
   <section v-if="isLoggedIn">
     <section class="record-actions">
       <StartStreakForm @refreshRecords="getRecords(currentUsername)" />
-    </section>
-    <section class="record-actions">
       <CreateRecordForm @refreshRecords="getRecords(currentUsername)" />
     </section>
     <section class="records-list" v-if="loaded">
@@ -76,7 +74,10 @@ section {
 }
 
 .record-actions {
+  display: flex;
+  gap: 1em;
   margin-bottom: 10px;
+  justify-content: center;
 }
 
 .no-records {

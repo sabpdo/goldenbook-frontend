@@ -396,7 +396,7 @@ class Routes {
   @Router.get("/records/automatic")
   async getAutomaticTrackingStatus(session: SessionDoc) {
     const user = Sessioning.getUser(session);
-    return { isTrackingMessage: await Recording.isAutomatic(user, "Message"), isTrackingPosting: await Recording.isAutomatic(user, "Post") };
+    return { isTrackingMessaging: await Recording.isAutomatic(user, "Message"), isTrackingPosting: await Recording.isAutomatic(user, "Post") };
   }
 
   /**

@@ -3,6 +3,53 @@
 :root {
   --red: rgb(208, 67, 12);
   --base-bg: #f1f3f5;
+  --pastel-white: #f3f2ed;
+  --beige: #FEFAE0;
+  --blue: #168AAD;
+  --white: #fff;
+  --light-pastel-grey: #f0f4f4;
+  --nav-green: #004d40;
+  --green: #00796b;
+  --light-green: #93ddd1;
+}
+
+h1 {
+  font-size: 2.5rem;
+  color: var(--green);
+  margin-bottom: 20px;
+  justify-content: center;
+  align-items: center;
+}
+body {
+  font-family: 'sans-serif', 'Trebuchet MS';
+  background: linear-gradient(135deg, #e0f7fa, #80deea);
+}
+
+button {
+  color: var(--green);
+  font-weight: 600;
+  font-style: bold;
+  text-decoration: none;
+  padding: 10px 20px;
+  border: 2px solid var(--green);
+  border-radius: 20px;
+  transition: all 0.3s ease;
+  margin: 0 5px;
+}
+
+button:hover {
+  background-color: var(--green);
+  color: white;
+}
+
+.page-section {
+  margin-top: 5%;
+  text-align: center;
+  padding: 10%;
+  border-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.85);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
 }
 
 button.btn-small {
@@ -29,4 +76,9 @@ a.button {
   justify-content: center;
   align-items: center;
   gap: 1em;
+}
+.row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }

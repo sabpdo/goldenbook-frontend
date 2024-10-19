@@ -4,7 +4,7 @@ import StreakListComponent from "@/components/Record/StreakListComponent.vue";
 
 <template>
   <main>
-    <h1>Streak Tracking</h1>
+    <h1>Habit Tracking</h1>
     <StreakListComponent />
   </main>
 </template>

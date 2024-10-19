@@ -3,24 +3,20 @@ import PostListComponent from "@/components/Post/PostListComponent.vue";
 import { useUserStore } from "@/stores/user";
 import { storeToRefs } from "pinia";
 
-const { currentUsername } = storeToRefs(useUserStore());
-const { updateSession } = useUserStore();
-
-void updateSession();
+const { currentUsername, isLoggedIn } = storeToRefs(useUserStore());
 </script>
 
 <template>
   <main>
-    <h1>{{ currentUsername }}</h1>
-    <PostListComponent :own="true" />
+    <h1>Posts</h1>
+    <section>
+      <PostListComponent />
+    </section>
   </main>
 </template>
 
 <style scoped>
 h1 {
   text-align: center;
-}
-main {
-  padding-bottom: 100px;
 }
 </style>

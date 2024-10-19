@@ -4,9 +4,22 @@ import RegisterForm from "@/components/Login/RegisterForm.vue";
 </script>
 
 <template>
-  <main class="column">
-    <h1>Please login or register!</h1>
-    <LoginForm />
-    <RegisterForm />
-  </main>
+  <section class="login">
+    <section class="page-section">
+      <h1>Please login or register!</h1>
+      <main class="row">
+        <LoginForm />
+        <RegisterForm />
+      </main>
+    </section>
+  </section>
 </template>
+
+<style scoped>
+.login {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-height: 300px;
+}
+</style>
