@@ -23,4 +23,7 @@ import RegisterForm from "@/components/Login/RegisterForm.vue";
   max-height: 300px;
   margin-bottom: 55vh;
 }
+.page-section {
+  padding: 8%;
+}
 </style>

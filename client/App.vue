@@ -27,7 +27,7 @@ onBeforeMount(async () => {
   <header>
     <nav>
       <div class="title">
-        <img src="@/assets/images/logo.svg" />
+        <img src="@/assets/images/logo.jpg" />
         <RouterLink :to="{ name: 'Home' }">
           <h1>GoldenBook</h1>
         </RouterLink>
