@@ -4,21 +4,26 @@ import { useUserStore } from "@/stores/user";
 import { fetchy } from "@/utils/fetchy";
 import { storeToRefs } from "pinia";
 import { onBeforeMount, ref } from "vue";
+import { useToastStore } from "@/stores/toast";
 import SendMessageComponent from "./SendMessageForm.vue";
 import Sidebar from "./MessageListComponent.vue";
 
 const messages = ref<Array<Record<string, string>>>([]);
 const { isLoggedIn, currentUsername } = storeToRefs(useUserStore());
+const { toast } = storeToRefs(useToastStore());
 const loaded = ref(false);
-const selectedUser = ref("");
+const toUser = ref("");
 
 function setSelectedUser(username: string) {
-  selectedUser.value = username;
+  toUser.value = username;
 }
 
 async function getMessages(user: string) {
-  let query: Record<string, string> = { user };
+  let query: Record<string, string> = { currentUser: user, otherUser: toUser.value };
   let messageResults;
+  if (!toUser.value) {
+    toast.value = { message: "Please select a user to chat with", style: "error" };
+  }
   try {
     messageResults = await fetchy("/api/messages", "GET", { query });
   } catch (_) {
@@ -34,14 +39,14 @@ onBeforeMount(async () => {
 </script>
 
 <template>
-  <section v-if="isLoggedIn && loaded" class="main-container">
-    <Sidebar @toUser="setSelectedUser" />
+  <section v-if="isLoggedIn" class="main-container">
+    <Sidebar @toUser="setSelectedUser" @refreshMessages="getMessages(currentUsername)" />
     <div class="messages-section">
       <h1>Messages</h1>
       <article v-for="message in messages" :key="message._id">
         <MessageComponent :message="message" @refreshMessages="getMessages(currentUsername)" />
       </article>
-      <SendMessageComponent :toUser="selectedUser" @refreshMessages="getMessages(currentUsername)" />
+      <SendMessageComponent :toUser="toUser" @refreshMessages="getMessages(currentUsername)" />
     </div>
   </section>
 </template>

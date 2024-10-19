@@ -4,7 +4,7 @@ import { formatDate } from "@/utils/formatDate";
 import { storeToRefs } from "pinia";
 import { fetchy } from "../../utils/fetchy";
 
-const props = defineProps(["message"]);
+const props = defineProps(["message", "toUser"]);
 const emit = defineEmits(["editMessage", "refreshMessages"]);
 const { currentUsername } = storeToRefs(useUserStore());
 

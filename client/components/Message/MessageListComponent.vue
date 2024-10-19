@@ -7,7 +7,8 @@ import { onBeforeMount, ref } from "vue";
 const users = ref<Array<Record<string, string>>>([]);
 const loaded = ref(false);
 const { isLoggedIn } = storeToRefs(useUserStore());
-const emit = defineEmits(["toUser"]);
+const emit = defineEmits(["toUser", "refreshMessages"]);
+const selectedUser = ref<string | null>(null);
 
 async function getUsers() {
   let userResults;
@@ -23,7 +24,9 @@ onBeforeMount(async () => {
   loaded.value = true;
 });
 function selectUser(username: string) {
+  selectedUser.value = username;
   emit("toUser", username);
+  emit("refreshMessages");
 }
 </script>
 
@@ -31,7 +34,7 @@ function selectUser(username: string) {
   <div class="sidebar" v-if="isLoggedIn && loaded">
     <h2>Select User</h2>
     <div class="user-container">
-      <div class="user-block" v-for="user in users" :key="user.id" @click="selectUser(user.username)">
+      <div class="user-block" v-for="user in users" :key="user.id" @click="selectUser(user.username)" :class="{ selected: user.username === selectedUser }">
         {{ user.username }}
       </div>
     </div>

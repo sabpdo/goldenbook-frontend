@@ -36,12 +36,8 @@ export default class MessagingConcept {
     return await this.messages.readMany({}, { sort: { _id: -1 } });
   }
 
-  async getBySender(from: ObjectId) {
-    return await this.messages.readMany({ from: from });
-  }
-
-  async getByReceiver(to: ObjectId) {
-    return await this.messages.readMany({ to: to });
+  async getMessagesByUser(from: ObjectId, to: ObjectId) {
+    return await this.messages.readMany({ from, to });
   }
 
   async delete(_id: ObjectId) {

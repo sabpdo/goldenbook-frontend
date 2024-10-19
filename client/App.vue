@@ -16,9 +16,6 @@ const { toast } = storeToRefs(useToastStore());
 onBeforeMount(async () => {
   try {
     await userStore.updateSession();
-    if (isLoggedIn.value) {
-      await router.push({ name: "Profile" });
-    }
   } catch {
     // User is not logged in
     await router.push({ name: "Login" });
@@ -32,7 +29,7 @@ onBeforeMount(async () => {
       <div class="title">
         <img src="@/assets/images/logo.svg" />
         <RouterLink :to="{ name: 'Home' }">
-          <h1>Social Media App</h1>
+          <h1>GoldenBook</h1>
         </RouterLink>
       </div>
       <ul>

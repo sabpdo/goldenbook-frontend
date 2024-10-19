@@ -23,7 +23,7 @@ class Routes {
 
   @Router.get("/users")
   async getUsers() {
-    return await Authing.getUsers();
+    return Authing.getUsers();
   }
 
   @Router.get("/users/:username")
@@ -138,11 +138,12 @@ class Routes {
   }
 
   @Router.get("/messages")
-  @Router.validate(z.object({ user: z.string().optional() }))
-  async getMessages(user: string) {
-    const sender_id = (await Authing.getUserByUsername(user))._id;
-    const sent_messages = await Messaging.getBySender(sender_id);
-    const received_messages = await Messaging.getByReceiver(sender_id);
+  @Router.validate(z.object({ currentUser: z.string().optional(), otherUser: z.string().optional() }))
+  async getMessages(currentUser: string, otherUser: string) {
+    const currentUser_id = (await Authing.getUserByUsername(currentUser))._id;
+    const otherUser_id = (await Authing.getUserByUsername(otherUser))._id;
+    const sent_messages = await Messaging.getMessagesByUser(currentUser_id, otherUser_id);
+    const received_messages = await Messaging.getMessagesByUser(otherUser_id, currentUser_id);
     const all_messages = sent_messages.concat(received_messages);
     return Responses.messages(all_messages);
   }
