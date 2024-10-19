@@ -62,6 +62,7 @@ onBeforeMount(async () => {
 .records-list {
   display: flex;
   flex-direction: column;
+  align-items: center;
 }
 
 .calendar {

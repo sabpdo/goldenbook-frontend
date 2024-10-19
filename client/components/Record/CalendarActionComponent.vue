@@ -24,16 +24,18 @@ const daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 </script>
 
 <template>
-  <div class="action-calendar">
-    <h2>Tracked Action: {{ props.action }}</h2>
-    <div class="day-labels">
-      <div v-for="day in daysOfWeek" :key="day" class="day-label">{{ day }}</div>
-    </div>
-    <div class="calendar-grid">
-      <div v-for="day in totalDaysInMonth" :key="day" :class="['calendar-day', { 'current-day': day === currentDay }]">
-        <div class="day-number">{{ day }}</div>
-        <div class="emoji">
-          <span v-if="actionDates.has(`${currentYear}-${(currentMonth + 1).toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`)">🔥</span>
+  <div class="wrap-action-calendar">
+    <div class="action-calendar">
+      <h2>Tracked Action: {{ props.action }}</h2>
+      <div class="day-labels">
+        <div v-for="day in daysOfWeek" :key="day" class="day-label">{{ day }}</div>
+      </div>
+      <div class="calendar-grid">
+        <div v-for="day in totalDaysInMonth" :key="day" :class="['calendar-day', { 'current-day': day === currentDay }]">
+          <div class="day-number">{{ day }}</div>
+          <div class="emoji">
+            <span v-if="actionDates.has(`${currentYear}-${(currentMonth + 1).toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`)">🔥</span>
+          </div>
         </div>
       </div>
     </div>
@@ -41,6 +43,9 @@ const daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 </template>
 
 <style scoped>
+.wrap-action-calendar {
+  padding: 1em;
+}
 .action-calendar {
   width: 315px;
   margin: 0 auto;
