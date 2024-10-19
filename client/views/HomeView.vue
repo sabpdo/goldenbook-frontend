@@ -1,17 +1,16 @@
 <script setup lang="ts">
 import { useUserStore } from "@/stores/user";
 import { storeToRefs } from "pinia";
-import PostListComponent from "@/components/Post/PostListComponent.vue";
 const { currentUsername, isLoggedIn } = storeToRefs(useUserStore());
 </script>
 
 <template>
-  <section v-if="isLoggedIn">
-    <h1>Welcome {{ currentUsername }}!</h1>
-    <PostListComponent />
-  </section>
-  <main class="landing-page" v-else>
-    <section class="page-section">
+  <main class="landing-page">
+    <section class="page-section" v-if="isLoggedIn">
+      <h1>Welcome {{ currentUsername }}!</h1>
+      <p class="hero-subtitle">Enter<router-link class="link-button" :to="{ name: 'Profile' }">here!</router-link></p>
+    </section>
+    <section class="page-section" v-else>
       <h1>
         Welcome to GoldenBook!
         <p class="hero-subtitle">

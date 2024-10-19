@@ -43,14 +43,14 @@ onBeforeMount(async () => {
 <template>
   <section v-if="isLoggedIn">
     <section class="main-container">
-      <NudgeSeriesComponent :toUser="toUser"/>
+      <NudgeSeriesComponent :toUser="toUser" />
       <MessageListComponent @toUser="setSelectedUser" @refreshMessages="getMessages(currentUsername)" />
       <div class="messages-section">
         <div class="nudges-section">
           <h3>To: {{ toUser }}</h3>
           <div class="nudge-form">
             <SendNudgeForm :toUser="toUser" />
-        </div>
+          </div>
         </div>
         <h1>Messages</h1>
         <section v-if="messages.length === 0">

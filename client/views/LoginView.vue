@@ -21,5 +21,6 @@ import RegisterForm from "@/components/Login/RegisterForm.vue";
   flex-direction: column;
   align-items: center;
   max-height: 300px;
+  margin-bottom: 55vh;
 }
 </style>

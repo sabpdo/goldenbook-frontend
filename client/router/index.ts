@@ -9,6 +9,7 @@ import SettingView from "../views/SettingView.vue";
 import StreakTrackingView from "../views/StreakTrackingView.vue";
 import MessageView from "../views/MessageView.vue";
 import ProfileView from "../views/ProfileView.vue";
+import CommunityBoardComponent from "../views/CommunityBoardView.vue";
 
 const router = createRouter({
   history: createWebHistory(),
@@ -17,6 +18,11 @@ const router = createRouter({
       path: "/",
       name: "Home",
       component: HomeView,
+    },
+    {
+      path: "/profile",
+      name: "Profile",
+      component: ProfileView,
     },
     {
       path: "/setting",
@@ -52,6 +58,12 @@ const router = createRouter({
       path: "/profile",
       name: "Profile",
       component: ProfileView,
+      meta: { requiresAuth: true },
+    },
+    {
+      path: "/posts",
+      name: "Community Board",
+      component: CommunityBoardComponent,
       meta: { requiresAuth: true },
     },
     {
