@@ -40,6 +40,10 @@ export default class MessagingConcept {
     return await this.messages.readMany({ from: from });
   }
 
+  async getByReceiver(to: ObjectId) {
+    return await this.messages.readMany({ to: to });
+  }
+
   async delete(_id: ObjectId) {
     await this.messages.deleteOne({ _id });
     return { msg: "Message deleted successfully!" };

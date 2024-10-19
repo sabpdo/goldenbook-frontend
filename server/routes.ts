@@ -138,17 +138,13 @@ class Routes {
   }
 
   @Router.get("/messages")
-  @Router.validate(z.object({ sender: z.string().optional() }))
-  async getMessages(sender?: string) {
-    let messages;
-
-    if (sender) {
-      const sender_id = (await Authing.getUserByUsername(sender))._id;
-      messages = await Messaging.getBySender(sender_id);
-    } else {
-      messages = await Messaging.getMessages();
-    }
-    return Responses.messages(messages);
+  @Router.validate(z.object({ user: z.string().optional() }))
+  async getMessages(user: string) {
+    const sender_id = (await Authing.getUserByUsername(user))._id;
+    const sent_messages = await Messaging.getBySender(sender_id);
+    const received_messages = await Messaging.getByReceiver(sender_id);
+    const all_messages = sent_messages.concat(received_messages);
+    return Responses.messages(all_messages);
   }
 
   /**
