@@ -8,12 +8,13 @@ import { onBeforeMount, ref } from "vue";
 const { isLoggedIn, currentUsername } = storeToRefs(useUserStore());
 const loaded = ref(false);
 let nudges = ref<Array<Record<string, string>>>([]);
+const emit = defineEmits(["toUser", "refreshNudges"]);
 
 async function getNudges() {
   let query: Record<string, string> = { receiver: currentUsername.value };
   let nudgeResults;
   try {
-    nudgeResults = await fetchy("/api/nudges", "GET", query);
+    nudgeResults = await fetchy("/api/nudges", "GET", { query });
   } catch (_) {
     return;
   }

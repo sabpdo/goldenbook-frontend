@@ -3,13 +3,14 @@ import { ref } from "vue";
 import { fetchy } from "../../utils/fetchy";
 
 const time = ref("");
-const toUser = ref("");
+const props = defineProps(["toUser"]);
 const emit = defineEmits(["refreshNudges"]);
 
-const createNudge = async (to: string, time: string) => {
+const createNudge = async (time: string, to: string) => {
+  console.log(to, time);
   try {
     await fetchy("/api/nudges/message", "POST", {
-      body: { to, time },
+      body: { to: to, time: time },
     });
   } catch (_) {
     return;
@@ -23,21 +24,48 @@ const emptyForm = () => {
 </script>
 
 <template>
-  <form @submit.prevent="createNudge(toUser, time)">
-    <label for="time">Time:</label>
+  <form @submit.prevent="createNudge(time, props.toUser)">
+    <label for="time">Nudge At Time:</label>
     <input id="time" v-model="time" type="datetime-local" required />
-    <button type="submit" class="pure-button-primary pure-button">Submit</button>
+    <button type="submit" class="pure-button-primary pure-button">Send</button>
   </form>
 </template>
 
 <style scoped>
-form {
-  background-color: var(--base-bg);
-  border-radius: 2em;
+.nudge-form {
+  border-radius: 1em;
   display: flex;
   flex-direction: column;
-  gap: 0.5em;
-  padding: 1em;
-  width: 10em;
+  gap: 1em;
+  padding: 1.5em;
+  background-color: #f9f9f9;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 300px;
+}
+
+label {
+  margin-right: 1em;
+  font-weight: bold;
+}
+
+input[type="datetime-local"] {
+  flex: 1;
+  border: 1px solid #ddd;
+  border-radius: 0.5em;
+  padding: 0.5em;
+}
+
+button {
+  align-self: flex-start;
+  padding: 0.5em 1em;
+  border-radius: 0.5em;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
 }
 </style>
