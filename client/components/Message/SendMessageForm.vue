@@ -22,16 +22,37 @@ const emptyForm = () => {
 
 <template>
   <form @submit.prevent="sendMessage(message, props.toUser)" class="message-form">
-    <textarea v-model="message" id="message" name="message" rows="4" cols="50" required></textarea>
-    <button type="submit" class="btn-small pure-button">Send</button>
+    <textarea v-model="message" id="message" name="message" rows="4" required placeholder="Type your message here..." class="message-input"></textarea>
+    <button type="submit" class="btn-small pure-button send-button">✉️</button>
   </form>
 </template>
 
 <style scoped>
 .message-form {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 1rem;
+  align-items: flex-start;
+}
+
+.message-input {
+  flex: 1;
+  resize: none;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-right: 10px;
+}
+
+.send-button {
+  background: #45a049;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  padding: 10px 15px;
+  transition: background 0.3s;
+}
+
+.send-button:hover {
+  background: #45a049;
 }
 </style>

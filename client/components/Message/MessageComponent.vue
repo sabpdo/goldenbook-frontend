@@ -17,7 +17,6 @@ const deleteMessage = async () => {
   emit("refreshMessages");
 };
 </script>
-
 <template>
   <div
     :class="{
@@ -25,23 +24,20 @@ const deleteMessage = async () => {
       'message-received': props.message.to == currentUsername,
     }"
   >
-    <p
-      class="message-content"
-      :style="{
-        backgroundColor: props.message.to == currentUsername ? 'lightblue' : 'grey',
-      }"
-    >
-      {{ props.message.content }}
-    </p>
+    <div class="message-wrapper">
+      <p
+        class="message-content"
+        :style="{
+          backgroundColor: props.message.from == currentUsername ? 'lightblue' : 'lightgrey',
+        }"
+      >
+        {{ props.message.content }}
+      </p>
+      <button class="delete-btn" @click="deleteMessage" aria-label="Delete message" v-if="props.message.from == currentUsername">🗑️</button>
+    </div>
     <div class="base">
-      <menu v-if="props.message.from == currentUsername">
-        <li>
-          <button class="button-error btn-small pure-button" @click="deleteMessage">Delete</button>
-        </li>
-      </menu>
       <article class="timestamp">
-        <p v-if="props.message.dateCreated !== props.message.dateUpdated">Edited on: {{ formatDate(props.message.dateUpdated) }}</p>
-        <p v-else>Sent: {{ formatDate(props.message.dateCreated) }}</p>
+        <p>Sent: {{ formatDate(props.message.dateCreated) }}</p>
       </article>
     </div>
   </div>
@@ -59,12 +55,31 @@ const deleteMessage = async () => {
   align-items: flex-start;
 }
 
+.message-wrapper {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
 .message-content {
   margin: 0;
   word-wrap: break-word;
   padding: 7px;
   border-radius: 10px;
   display: inline-block;
+}
+
+.delete-btn {
+  background: none;
+  border: none;
+  font-size: 1.2em;
+  cursor: pointer;
+  margin-left: 10px;
+  transition: transform 0.2s ease;
+}
+
+.delete-btn:hover {
+  transform: scale(1.2);
 }
 
 .timestamp {

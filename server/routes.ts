@@ -145,7 +145,8 @@ class Routes {
     const sent_messages = await Messaging.getMessagesByUser(currentUser_id, otherUser_id);
     const received_messages = await Messaging.getMessagesByUser(otherUser_id, currentUser_id);
     const all_messages = sent_messages.concat(received_messages);
-    return Responses.messages(all_messages);
+    const sorted_messages = all_messages.sort((a, b) => a.time.getTime() - b.time.getTime());
+    return Responses.messages(sorted_messages);
   }
 
   /**
@@ -166,7 +167,7 @@ class Routes {
     if (await Recording.isAutomatic(sender, "Message")) {
       await Recording.create(sender, "Message", new Date());
     }
-    const created = await Messaging.send(sender, receiver, content);
+    const created = await Messaging.send(receiver, sender, content);
     console.log(created);
     return { msg: created.msg, message: await Responses.message(created.message) };
   }

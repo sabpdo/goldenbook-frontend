@@ -42,7 +42,7 @@ const daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
 <style scoped>
 .action-calendar {
-  max-width: 25%;
+  width: 315px;
   margin: 0 auto;
   background-color: var(--base-bg);
   padding: 1em;

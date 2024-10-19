@@ -43,10 +43,13 @@ onBeforeMount(async () => {
     <Sidebar @toUser="setSelectedUser" @refreshMessages="getMessages(currentUsername)" />
     <div class="messages-section">
       <h1>Messages</h1>
-      <article v-for="message in messages" :key="message._id">
+      <section v-if="messages.length === 0">
+        <p>No messages yet</p>
+      </section>
+      <article v-for="message in messages" :key="message._id" class="message-container">
         <MessageComponent :message="message" @refreshMessages="getMessages(currentUsername)" />
       </article>
-      <SendMessageComponent :toUser="toUser" @refreshMessages="getMessages(currentUsername)" />
+      <SendMessageComponent :toUser="toUser" @refreshMessages="getMessages(currentUsername)" class="send-message" />
     </div>
   </section>
 </template>
@@ -77,11 +80,17 @@ h1 {
   flex-direction: column;
   padding: 20px;
   background-color: #fff;
-  overflow-y: auto;
   height: 100%;
 }
 
-.messages-section article {
-  margin-bottom: 10px;
+.send-message {
+  position: fixed;
+  bottom: 0;
+  left: 300px;
+  right: 0;
+  background-color: #fff;
+  padding: 10px;
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+  z-index: 10;
 }
 </style>
