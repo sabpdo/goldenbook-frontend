@@ -11,7 +11,7 @@ void updateSession();
 
 <template>
   <main>
-    <h1>{{ currentUsername }}</h1>
+    <h1>@{{ currentUsername }}</h1>
     <PostListComponent :own="true" />
   </main>
 </template>
@@ -21,6 +21,6 @@ h1 {
   text-align: center;
 }
 main {
-  padding-bottom: 100px;
+  padding-bottom: 10vh;
 }
 </style>

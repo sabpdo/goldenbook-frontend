@@ -24,7 +24,7 @@ const emptyForm = () => {
 
 <template>
   <form @submit.prevent="createRecord(action)">
-    <label for="action">Action:</label>
+    <label for="action">What daily habit did you build today?</label>
     <textarea id="action" v-model="action" placeholder="Record an action!" required> </textarea>
     <button type="submit">Submit</button>
   </form>

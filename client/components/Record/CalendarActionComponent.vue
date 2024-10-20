@@ -52,7 +52,7 @@ const daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
   background-color: var(--base-bg);
   padding: 1em;
   border-radius: 1em;
-  border: 0.5px solid #00796b;
+  border: 0.5px solid var(--nav-green);
   border-radius: 10px;
 }
 
@@ -83,7 +83,9 @@ const daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 }
 
 .current-day {
-  background-color: var(--mid-pastel-grey);
+  border: 4px solid var(--nav-green);
+  background-color: #e6f4f2;
+  border-radius: 10px;
   font-weight: bold;
 }
 

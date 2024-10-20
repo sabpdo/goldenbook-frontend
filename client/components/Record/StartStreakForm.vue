@@ -64,13 +64,13 @@ const stopTrackingPosting = async () => {
 <template>
   <section class="tracking-section">
     <div class="tracking-group">
-      <button v-if="!isTrackingMessaging" type="button" class="tracking-button" @click="startTrackingMessaging">Start Message Tracking</button>
-      <button v-else type="button" class="tracking-button active" @click="stopTrackingMessaging">Stop Message Tracking</button>
+      <button v-if="!isTrackingMessaging" type="button" class="tracking-button" @click="startTrackingMessaging">Start Message Activity Tracking</button>
+      <button v-else type="button" class="tracking-button active" @click="stopTrackingMessaging">Stop Message Activity Tracking</button>
     </div>
 
     <div class="tracking-group">
-      <button v-if="!isTrackingPosting" type="button" class="tracking-button" @click="startTrackingPosting">Start Post Tracking</button>
-      <button v-else type="button" class="tracking-button active" @click="stopTrackingPosting">Stop Post Tracking</button>
+      <button v-if="!isTrackingPosting" type="button" class="tracking-button" @click="startTrackingPosting">Start Post Activity Tracking</button>
+      <button v-else type="button" class="tracking-button active" @click="stopTrackingPosting">Stop Post Activity Tracking</button>
     </div>
   </section>
 </template>

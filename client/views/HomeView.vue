@@ -7,7 +7,7 @@ const { currentUsername, isLoggedIn } = storeToRefs(useUserStore());
 <template>
   <main class="landing-page">
     <section class="page-section" v-if="isLoggedIn">
-      <h1>Welcome {{ currentUsername }}!</h1>
+      <h1>Welcome @{{ currentUsername }}!</h1>
       <p class="hero-subtitle"><router-link class="link-button" :to="{ name: 'Profile' }">Enter here!</router-link></p>
     </section>
     <section class="page-section" v-else>
