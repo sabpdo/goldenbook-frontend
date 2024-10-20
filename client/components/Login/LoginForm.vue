@@ -9,8 +9,8 @@ const { loginUser, updateSession } = useUserStore();
 
 async function login() {
   await loginUser(username.value, password.value);
-  void updateSession();
-  void router.push({ name: "Profile" });
+  await updateSession();
+  await router.push({ name: "Profile" });
 }
 </script>
 
