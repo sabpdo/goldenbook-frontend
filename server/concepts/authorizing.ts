@@ -47,6 +47,9 @@ export default class AuthorizingConcept {
   }
 
   async addAuthorizer(authorizer: ObjectId, authorizee: ObjectId) {
+    if (authorizer.equals(authorizee)) {
+      throw new NotAllowedError("User cannot authorize themselves!");
+    }
     const permission_control = await this.user_control_map.readOne({ authorizer, authorizee });
     if (permission_control) {
       throw new AuthorizerAlreadyExistsError(authorizer, authorizee);

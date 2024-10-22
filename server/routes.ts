@@ -410,14 +410,23 @@ class Routes {
   }
 
   /**
-   * Gets the actions that the current session user is denied from performing.
+   * Gets the actions that the current session user is denied from performing if
+   * username is undefined, else gets the actions the parametrized user can performed
+   * if the other user has authorization control over the account..
    * @param session the session of the user
    * @returns a list of denied actions
    */
   @Router.get("/authorize")
-  async getCurrentUserDeniedActions(session: SessionDoc) {
-    const user = Sessioning.getUser(session);
-    return await Authorizing.getDeniedActionByUser(user);
+  async getCurrentUserDeniedActions(session: SessionDoc, username?: string) {
+    if (username) {
+      const authorizee = (await Authing.getUserByUsername(username))._id;
+      const authorizer = Sessioning.getUser(session);
+      await Authorizing.assertIsAuthorizer(authorizer, authorizee);
+      return await Authorizing.getDeniedActionByUser(authorizee);
+    } else {
+      const user = Sessioning.getUser(session);
+      return await Authorizing.getDeniedActionByUser(user);
+    }
   }
 
   /**
