@@ -47,7 +47,7 @@ onBeforeMount(async () => {
       <CreateRecordForm @refreshRecords="getRecords(currentUsername)" />
     </section>
     <section class="records-list" v-if="loaded">
-      <div v-if="Object.keys(groupedRecords).length === 0" class="no-records">No records found</div>
+      <p v-if="Object.keys(groupedRecords).length === 0" class="no-records">...No records found! Record your first habit!</p>
       <div v-else class="grouped-records">
         <CalendarActionComponent v-for="(records, action) in groupedRecords" :key="action" :action="action" :records="records" />
       </div>
@@ -61,6 +61,7 @@ onBeforeMount(async () => {
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-bottom: 40vh;
 }
 
 .calendar {
@@ -80,10 +81,13 @@ section {
   justify-content: center;
 }
 
-.no-records {
-  color: black;
+p {
+  color: var(--nav-green);
+  font-family: "sans-serif", "Trebuchet MS";
   text-align: center;
-  font-size: 40px;
+  font-weight: bold;
+  font-style: italic;
+  font-size: 20px;
   padding: 20px;
   display: flex;
   justify-content: center;

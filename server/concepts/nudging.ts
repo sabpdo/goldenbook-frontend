@@ -79,7 +79,7 @@ export default class NudgingConcept {
   }
 
   async getByReceiver(to: ObjectId) {
-    return await this.nudges.readMany({ to: to });
+    return await this.nudges.readMany({ to });
   }
 
   async delete(_id: ObjectId) {

@@ -83,21 +83,45 @@ export default class Responses {
   /**
    * Same as {@link nudge} but for an array of NudgeDoc for improved performance.
    */
-  static async nudges(nudges: NudgeDoc[]) {
-    const senders = Array<string | null>();
-    for (let i = 0; i < nudges.length; i++) {
-      const nudge_sender = nudges[i].from;
-      if (!nudge_sender) {
-        senders.push(null);
-      } else if (nudge_sender) {
-        const sender = (await Authing.getUserById(nudge_sender)).username;
-        senders.push(sender);
-      }
-    }
-    const receivers = await Authing.idsToUsernames(nudges.map((nudge) => nudge.to));
-    return nudges.map((nudge, i) => ({ ...nudge, from: senders[i], to: receivers[i] }));
-  }
 
+  /**
+   * Same as {@link nudge} but for an array of NudgeDoc for improved performance.
+   */
+  static async nudges(nudges: NudgeDoc[]) {
+    const sendersPromises = nudges.map(async (nudge) => {
+      if (!nudge.from) {
+        return null;
+      } else {
+        try {
+          const sender = await Authing.getUserById(nudge.from);
+          return sender ? sender.username : null;
+        } catch (_) {
+          return null;
+        }
+      }
+    });
+
+    const receiversPromises = nudges.map(async (nudge) => {
+      if (!nudge.to) {
+        return null;
+      } else {
+        try {
+          const receiver = await Authing.getUserById(nudge.to);
+          return receiver ? receiver.username : null;
+        } catch (_) {
+          return null;
+        }
+      }
+    });
+
+    const [senders, receivers] = await Promise.all([Promise.all(sendersPromises), Promise.all(receiversPromises)]);
+
+    return nudges.map((nudge, i) => ({
+      ...nudge,
+      from: senders[i],
+      to: receivers[i],
+    }));
+  }
   /**
    * Convert RecordDoc into more readable format for the frontend by converting the recorder id into a username.
    */

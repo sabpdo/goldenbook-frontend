@@ -113,7 +113,6 @@ class Routes {
    * @returns the updated post
    */
   @Router.patch("/posts/:id")
-  @Router.validate(z.object({ id: z.string(), content: z.string().optional() }))
   async updatePost(session: SessionDoc, id: string, content?: string, options?: PostOptions) {
     const user = Sessioning.getUser(session);
     const oid = new ObjectId(id);
@@ -551,7 +550,6 @@ class Routes {
 
   /**
    * Gets the usernames of users who the parametrized user has authorization access and who can authorize actions on the parametrized user's account.
-   * If no username is given, the current session user's authorizations are returned.
    *
    * @param session the session of the user
    * @returns a dictionary of
@@ -559,7 +557,7 @@ class Routes {
    *    "authorizees": list of usernames who have given control to the parametrized user
    */
   @Router.get("/authorize/control/:username")
-  @Router.validate(z.object({ username: z.string().optional() }))
+  @Router.validate(z.object({ username: z.string() }))
   async getAuthorizations(username: string) {
     const user = (await Authing.getUserByUsername(username))._id;
     const authorizers = await Responses.user_controls(await Authorizing.getAuthorizersByAuthorizee(user));

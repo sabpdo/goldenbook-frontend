@@ -25,7 +25,7 @@ const emptyForm = () => {
 <template>
   <form @submit.prevent="createRecord(action)">
     <label for="action">What daily habit did you build today?</label>
-    <textarea id="action" v-model="action" placeholder="Record an action!" required> </textarea>
+    <textarea id="action" v-model="action" maxlength="50" placeholder="Record an action!" required> </textarea>
     <button type="submit">Submit</button>
   </form>
 </template>
@@ -39,7 +39,7 @@ form {
   gap: 0.5em;
   padding: 1em;
   width: 10em;
-  border: 2px solid #00796b;
+  border: 2px solid var(--green);
   border-radius: 20px;
 }
 
@@ -50,5 +50,9 @@ textarea {
   padding: 0.5em;
   border-radius: 4px;
   resize: none;
+}
+label {
+  font-weight: bold;
+  color: var(--nav-green);
 }
 </style>

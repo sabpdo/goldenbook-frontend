@@ -22,7 +22,7 @@ const deleteRecord = async () => {
   <p class="author">{{ props.record.recorder }}</p>
   <p>{{ props.record.content }}</p>
   <div class="base">
-    <p>Action Recorded: {{ props.record.action }}</p>
+    <p>Habit Recorded: {{ props.record.action }}</p>
     <menu v-if="props.record.recorder == currentUsername">
       <li><button class="btn-small pure-button" @click="emit('editRecord', props.record._id)">Edit</button></li>
       <li><button class="button-error btn-small pure-button" @click="deleteRecord">Delete</button></li>

@@ -26,7 +26,7 @@ const daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 <template>
   <div class="wrap-action-calendar">
     <div class="action-calendar">
-      <h2>Tracked Action: {{ props.action }}</h2>
+      <h2>Tracked Habit: {{ props.action }}</h2>
       <div class="day-labels">
         <div v-for="day in daysOfWeek" :key="day" class="day-label">{{ day }}</div>
       </div>
