@@ -1,0 +1,117 @@
+<script setup lang="ts">
+import { fetchy } from "../../utils/fetchy";
+import { defineProps, ref, onBeforeMount } from "vue";
+const props = defineProps(["authorizee"]);
+const allowedActions = ref([""]);
+const loaded = ref(false);
+const allPossibleActions = ["Post", "Message", "Record", "Nudge"];
+
+const getAuthorizedActions = async () => {
+  let query = { username: props.authorizee };
+  try {
+    const denied_actions = await fetchy(`/api/authorize/deny/user`, "GET", { query });
+    allowedActions.value = allPossibleActions.filter((action) => !denied_actions.includes(action));
+  } catch {
+    return;
+  }
+};
+
+const toggleAuthorization = async (username: string, action: string, allowed: boolean) => {
+  try {
+    if (allowed) {
+      await fetchy(`/api/authorize/deny/${action.toLowerCase()}`, "POST", {
+        body: { username },
+      });
+    } else {
+      await fetchy(`/api/authorize/allow/${action.toLowerCase()}`, "POST", {
+        body: { username },
+      });
+    }
+    await getAuthorizedActions();
+  } catch {
+    return;
+  }
+};
+
+onBeforeMount(async () => {
+  await getAuthorizedActions();
+  loaded.value = true;
+});
+</script>
+
+<template>
+  <h1>Manage Your Authorizee's Actions</h1>
+  <ul>
+    <li v-for="action in allowedActions" :key="action">
+      {{ action }}
+      <label class="switch">
+        <input type="checkbox" :checked="allowedActions.includes(action)" @change="toggleAuthorization(props.authorizee.value, action, allowedActions.includes(action))" />
+        <span class="slider"></span>
+      </label>
+    </li>
+  </ul>
+</template>
+
+<style scoped>
+h1 {
+  text-align: center;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  margin: 10px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 200px;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 34px;
+  height: 20px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: 0.4s;
+  border-radius: 34px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 14px;
+  width: 14px;
+  border-radius: 50%;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: 0.4s;
+}
+
+input:checked + .slider {
+  background-color: #4caf50;
+}
+
+input:checked + .slider:before {
+  transform: translateX(14px);
+}
+</style>

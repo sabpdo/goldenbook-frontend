@@ -10,7 +10,7 @@ const createRecord = async (action: string) => {
     await fetchy("/api/records", "POST", {
       body: { action },
     });
-  } catch (_) {
+  } catch {
     return;
   }
   emit("refreshRecords");

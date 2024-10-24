@@ -14,7 +14,7 @@ async function getUsers() {
   let userResults;
   try {
     userResults = await fetchy("/api/users", "GET");
-  } catch (_) {
+  } catch {
     return;
   }
   users.value = userResults;

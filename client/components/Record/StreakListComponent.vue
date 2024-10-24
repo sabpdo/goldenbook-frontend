@@ -19,7 +19,7 @@ async function getRecords(receiver?: string) {
     recordResults = await fetchy("/api/records", "GET", { query });
     records.value = recordResults;
     groupRecordsByAction(recordResults);
-  } catch (_) {
+  } catch {
     return;
   }
 }

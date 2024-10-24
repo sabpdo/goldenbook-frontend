@@ -4,6 +4,7 @@ import { useUserStore } from "@/stores/user";
 import { storeToRefs } from "pinia";
 import UpdateUserForm from "../components/Setting/UpdateUserForm.vue";
 import CreateSocialWellnessNotification from "../components/Nudge/CreateSocialWellnessNotification.vue";
+import AuthorizationComponentList from "@/components/Authorization/AuthorizationComponentList.vue";
 
 const { currentUsername } = storeToRefs(useUserStore());
 const { logoutUser, deleteUser } = useUserStore();
@@ -32,6 +33,9 @@ async function delete_() {
         <div class="text">Remind me to stay connected with friends and family!</div>
         <CreateSocialWellnessNotification />
         <UpdateUserForm />
+        <h2>Manage Your Authorizations</h2>
+        <p>View and edit who has control over your account</p>
+        <AuthorizationComponentList />
       </main>
     </section>
   </section>
@@ -48,7 +52,6 @@ button {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 90vh;
   background-color: rgba(255, 255, 255, 0.85);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   max-width: 600px;

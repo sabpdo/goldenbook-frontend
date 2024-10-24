@@ -28,7 +28,7 @@ async function getMessages(user: string) {
   }
   try {
     messageResults = await fetchy("/api/messages", "GET", { query });
-  } catch (_) {
+  } catch {
     return;
   }
   messages.value = messageResults;

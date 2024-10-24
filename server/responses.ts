@@ -95,7 +95,7 @@ export default class Responses {
         try {
           const sender = await Authing.getUserById(nudge.from);
           return sender ? sender.username : null;
-        } catch (_) {
+        } catch {
           return null;
         }
       }
@@ -108,7 +108,7 @@ export default class Responses {
         try {
           const receiver = await Authing.getUserById(nudge.to);
           return receiver ? receiver.username : null;
-        } catch (_) {
+        } catch {
           return null;
         }
       }

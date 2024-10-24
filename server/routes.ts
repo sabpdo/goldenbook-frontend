@@ -402,8 +402,7 @@ class Routes {
    * Gets the actions that the parametrized user with the given username is denied from performing.
    * @returns a list of denied actions
    */
-  @Router.get("/authorize/deny/:username")
-  @Router.validate(z.object({ username: z.string().optional() }))
+  @Router.get("/authorize/deny/user")
   async getDeniedActions(username: string) {
     const userOid = (await Authing.getUserByUsername(username))._id;
     return await Authorizing.getDeniedActionByUser(userOid);
@@ -412,7 +411,7 @@ class Routes {
   /**
    * Gets the actions that the current session user is denied from performing if
    * username is undefined, else gets the actions the parametrized user can performed
-   * if the other user has authorization control over the account..
+   * if the other user has authorization control over the account.
    * @param session the session of the user
    * @returns a list of denied actions
    */
@@ -558,17 +557,16 @@ class Routes {
   }
 
   /**
-   * Gets the usernames of users who the parametrized user has authorization access and who can authorize actions on the parametrized user's account.
+   * Gets the usernames of users who current user has authorization access and who can authorize actions on the parametrized user's account.
    *
    * @param session the session of the user
    * @returns a dictionary of
    *    "authorizers": list of usernames who the parametrized user has given control to
    *    "authorizees": list of usernames who have given control to the parametrized user
    */
-  @Router.get("/authorize/control/:username")
-  @Router.validate(z.object({ username: z.string() }))
-  async getAuthorizations(username: string) {
-    const user = (await Authing.getUserByUsername(username))._id;
+  @Router.get("/authorize/control")
+  async getAuthorizations(session: SessionDoc) {
+    const user = Sessioning.getUser(session);
     const authorizers = await Responses.user_controls(await Authorizing.getAuthorizersByAuthorizee(user));
     const authorizees = await Responses.user_controls(await Authorizing.getAuthorizeesByAuthorizer(user));
     return { authorizers: await authorizers.authorizers, authorizees: await authorizees.authorizees };

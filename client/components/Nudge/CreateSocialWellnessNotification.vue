@@ -9,14 +9,14 @@ const end = ref("");
 const frequency = ref("");
 const emit = defineEmits(["refreshNudges"]);
 const isReminderOn = ref(false);
-const { isLoggedIn, currentUsername } = storeToRefs(useUserStore());
+const { currentUsername } = storeToRefs(useUserStore());
 
 const createPeriodicNudge = async (start: string, end: string, frequency: string, to: string) => {
   try {
     await fetchy("/api/nudges/message/periodic", "POST", {
       body: { start, end, frequency, to },
     });
-  } catch (_) {
+  } catch {
     return;
   }
   emit("refreshNudges");

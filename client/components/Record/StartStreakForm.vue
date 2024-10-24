@@ -11,7 +11,7 @@ const getTrackingStatus = async () => {
     const response = await fetchy("/api/records/automatic", "GET");
     isTrackingMessaging.value = response.isTrackingMessaging;
     isTrackingPosting.value = response.isTrackingPosting;
-  } catch (_) {
+  } catch {
     return;
   }
 };
@@ -23,7 +23,7 @@ onMounted(async () => {
 const startTrackingMessaging = async () => {
   try {
     await fetchy("/api/records/automatic/message", "POST");
-  } catch (_) {
+  } catch {
     return;
   }
   await getTrackingStatus();
@@ -33,7 +33,7 @@ const startTrackingMessaging = async () => {
 const stopTrackingMessaging = async () => {
   try {
     await fetchy("/api/records/automatic/message", "DELETE");
-  } catch (_) {
+  } catch {
     return;
   }
   await getTrackingStatus();
@@ -44,7 +44,7 @@ const startTrackingPosting = async () => {
   try {
     isTrackingPosting.value = true;
     await fetchy("/api/records/automatic/post", "POST");
-  } catch (_) {
+  } catch {
     return;
   }
   await getTrackingStatus();
@@ -54,7 +54,7 @@ const startTrackingPosting = async () => {
 const stopTrackingPosting = async () => {
   try {
     await fetchy("/api/records/automatic/post", "DELETE");
-  } catch (_) {
+  } catch {
     return;
   }
   await getTrackingStatus();

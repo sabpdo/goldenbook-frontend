@@ -1,10 +1,5 @@
 <script setup lang="ts">
 import PostListComponent from "@/components/Post/PostListComponent.vue";
-import { useUserStore } from "@/stores/user";
-import { storeToRefs } from "pinia";
-import CreatePostForm from "@/components/Post/CreatePostForm.vue";
-
-const { currentUsername, isLoggedIn } = storeToRefs(useUserStore());
 </script>
 
 <template>

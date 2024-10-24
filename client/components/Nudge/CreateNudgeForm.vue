@@ -12,7 +12,7 @@ const createNudge = async (time: string, to: string) => {
     await fetchy("/api/nudges/message", "POST", {
       body: { to: to, time: time },
     });
-  } catch (_) {
+  } catch {
     return;
   }
   emit("refreshNudges");
