@@ -5,23 +5,36 @@ import { storeToRefs } from "pinia";
 
 const props = defineProps(["nudge"]);
 const { currentUsername } = storeToRefs(useUserStore());
+const formattedTime = ref("");
+const emit = defineEmits(["refreshNudges"]);
 
 const isVisible = ref(false);
 
 const checkNudgeTime = () => {
-  const currentTime = new Date().getHours();
-  const nudgeTime = new Date(props.nudge.time).getHours();
+  const currentTime = new Date().getTime();
+  const nudgeTime = new Date(props.nudge.time).getTime();
+  console.log(new Date(currentTime), new Date(nudgeTime));
 
-  if (currentTime === nudgeTime && props.nudge.to === currentUsername) {
+  if (currentTime >= nudgeTime && currentTime <= nudgeTime + 600000 && props.nudge.to === currentUsername.value) {
     isVisible.value = true;
-  } else {
-    isVisible.value = false;
+    const nudgeDate = new Date(props.nudge.time);
+    formattedTime.value = new Intl.DateTimeFormat("en", {
+      dateStyle: "medium",
+      timeStyle: "short",
+    }).format(nudgeDate);
   }
 };
 
+const closeNudge = () => {
+  isVisible.value = false;
+  emit("refreshNudges");
+};
+
 onMounted(() => {
-  checkNudgeTime();
-  const interval = setInterval(checkNudgeTime, 60000);
+  const interval = setInterval(() => {
+    checkNudgeTime();
+    emit("refreshNudges");
+  }, 60000);
 
   onUnmounted(() => {
     clearInterval(interval);
@@ -32,16 +45,31 @@ onMounted(() => {
 <template>
   <transition name="slide">
     <div v-if="isVisible" class="nudge-container">
-      <p class="Nudge">{{ props.nudge.to }}</p>
-      <p>{{ props.nudge.time }}</p>
-      <div class="base">
-        <p>Reminder to stay in touch with friends and message!</p>
+      <button @click="closeNudge" class="close">✕</button>
+      <p class="nudge-header">👋 You have a nudge from {{ props.nudge.from }}!</p>
+      <p class="nudge-time">Received at: {{ formattedTime }}</p>
+      <div class="nudge-message">
+        <p>Just a friendly reminder to check in and message your friends!</p>
       </div>
     </div>
   </transition>
 </template>
 
 <style scoped>
+.close {
+  border-color: var(--red);
+  font-size: 1.2em;
+  position: absolute;
+  top: 0.5em;
+  right: 0.5em;
+  cursor: pointer;
+  color: var(--red);
+  padding: 0.5em;
+}
+.close:hover {
+  color: darkred;
+  background-color: var(--base-bg);
+}
 .nudge-container {
   background-color: var(--base-bg);
   border-radius: 2em;
@@ -53,12 +81,13 @@ onMounted(() => {
   position: fixed;
   right: 1em;
   top: 1em;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  opacity: 1;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   opacity: 0;
   transform: translateX(100%);
   transition:
-    transform 0.4s ease,
-    opacity 0.4s ease;
+    transform 10000s ease,
+    opacity 10000s ease;
 }
 
 .nudge-container .base {

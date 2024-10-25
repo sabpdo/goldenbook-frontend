@@ -8,14 +8,14 @@ import { onBeforeMount, ref } from "vue";
 const { isLoggedIn, currentUsername } = storeToRefs(useUserStore());
 const loaded = ref(false);
 let nudges = ref<Array<Record<string, string>>>([]);
-const emit = defineEmits(["toUser", "refreshNudges"]);
 
 async function getNudges() {
-  let query: Record<string, string> = { receiver: currentUsername.value };
+  const currentTime = new Date(Date.now()).getTime().toString();
+  let query: Record<string, string> = { receiver: currentUsername.value, time: currentTime };
   let nudgeResults;
   try {
     nudgeResults = await fetchy("/api/nudges", "GET", { query });
-  } catch (_) {
+  } catch {
     return;
   }
   nudges.value = nudgeResults;
@@ -30,7 +30,7 @@ onBeforeMount(async () => {
 <template>
   <section v-if="isLoggedIn && loaded && nudges.length !== 0" class="nudge-container">
     <article v-for="(nudge, index) in nudges" :key="nudge._id" :style="{ top: `${index * 80}px` }" class="nudge-wrapper">
-      <NudgeComponent :nudge="nudge" />
+      <NudgeComponent :nudge="nudge" @refreshNudges="getNudges" />
     </article>
   </section>
 </template>

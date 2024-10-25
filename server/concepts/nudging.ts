@@ -33,7 +33,7 @@ export default class NudgingConcept {
     } else {
       _id = await this.nudges.createOne({ to, action, time });
     }
-    return { msg: "Nudge successfully created!", nudge: await this.nudges.readOne({ _id }) };
+    return { msg: "Nudge successfully sent!", nudge: await this.nudges.readOne({ _id }) };
   }
 
   /**
@@ -73,9 +73,16 @@ export default class NudgingConcept {
 
   async getFutureNudges(time?: Date) {
     if (time == undefined) {
-      time = new Date();
+      time = new Date(Date.now());
     }
     return await this.nudges.readMany({ time: { $gt: time } }, { sort: { time: 1 } });
+  }
+
+  async getFutureNudgesByUser(to: ObjectId, time?: Date) {
+    if (time == undefined) {
+      time = new Date(Date.now());
+    }
+    return await this.nudges.readMany({ time: { $gt: time }, to: to }, { sort: { time: 1 } });
   }
 
   async getByReceiver(to: ObjectId) {

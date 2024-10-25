@@ -189,7 +189,6 @@ class Routes {
    *  Gets all nudges based off input parameters. If no parameters are given, all nudges are returned by default.
    *  Otherwise, the nudges are filtered by the given parameters.
    *
-   * @param sender username of a valid user
    * @param receiver username of a valid user
    * @param time the earliest time of the nudges to return
    * @returns nudges that match the given parameters
@@ -198,7 +197,11 @@ class Routes {
   @Router.validate(z.object({ receiver: z.string().optional(), time: z.string().optional() }))
   async getNudges(receiver?: string, time?: string) {
     let nudges;
-    if (receiver) {
+    if (receiver && time) {
+      const id = (await Authing.getUserByUsername(receiver))._id;
+      const timeDate = new Date(time);
+      nudges = await Nudging.getFutureNudgesByUser(id, timeDate);
+    } else if (receiver) {
       const id = (await Authing.getUserByUsername(receiver))._id;
       nudges = await Nudging.getByReceiver(id);
     } else if (time) {
