@@ -42,7 +42,6 @@ const stopTrackingMessaging = async () => {
 
 const startTrackingPosting = async () => {
   try {
-    isTrackingPosting.value = true;
     await fetchy("/api/records/automatic/post", "POST");
   } catch {
     return;

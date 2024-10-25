@@ -1,11 +1,16 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { fetchy } from "../../utils/fetchy";
-
+import { storeToRefs } from "pinia";
 const action = ref("");
 const emit = defineEmits(["refreshRecords"]);
+import { useToastStore } from "@/stores/toast";
+const { toast } = storeToRefs(useToastStore());
 
 const createRecord = async (action: string) => {
+  if (!validateAction()) {
+    return;
+  }
   try {
     await fetchy("/api/records", "POST", {
       body: { action },
@@ -15,6 +20,19 @@ const createRecord = async (action: string) => {
   }
   emit("refreshRecords");
   emptyForm();
+};
+
+const validateAction = () => {
+  if (!action.value.trim()) {
+    toast.value = { message: "Action cannot be empty.", style: "error" };
+    return false;
+  }
+  if (action.value.length > 50) {
+    toast.value = { message: "Action cannot exceed 50 characters.", style: "error" };
+    return false;
+  }
+  toast.value = null;
+  return true;
 };
 
 const emptyForm = () => {

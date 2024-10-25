@@ -101,7 +101,7 @@ export class UnauthorizedActionError extends NotAllowedError {
     public readonly user: ObjectId,
     public readonly action: string,
   ) {
-    super("{0} is not allowed to perform action {1}!", user, action);
+    super("{0} is not allowed to {1}!", user, action.toLowerCase());
   }
 }
 
@@ -128,7 +128,7 @@ export class AlreadyAllowedError extends NotAllowedError {
     public readonly action: string,
     public readonly authorizee: ObjectId,
   ) {
-    super("Action {0} already is allowed for user {1}!", action, authorizee);
+    super("User {1} is already allowed to {0}!", action.toLowerCase(), authorizee);
   }
 }
 
