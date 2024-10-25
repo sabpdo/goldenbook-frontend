@@ -107,6 +107,7 @@ h1 {
   z-index: 10;
   padding: 10px;
 }
+
 .nudges-section {
   height: 80px;
   background-color: var(--light-pastel-grey);
@@ -119,6 +120,7 @@ h1 {
 h3 {
   padding: 15px;
 }
+
 p {
   margin-left: 10px;
 }

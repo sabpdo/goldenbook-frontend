@@ -32,9 +32,8 @@ onBeforeMount(async () => {
 <template>
   <section v-if="loaded && isLoggedIn">
     <CurrentAllowedActionList />
-    <h3>Manage Your Authorizee's Actions</h3>
-    <div v-if="authorizees.length !== 0" class="authorizee_list">
-      <section v-for="authorizee in authorizees" :key="authorizee">
+    <div v-if="authorizees.length !== 0" class="container">
+      <section v-for="authorizee in authorizees" :key="authorizee" class="authorizees-container">
         <AuthorizationActionForm :authorizee="authorizee" />
       </section>
     </div>
@@ -49,5 +48,16 @@ onBeforeMount(async () => {
 h3 {
   text-align: center;
   color: var(--nav-green);
+  margin-bottom: 20px;
+}
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px var(--light-green);
+  margin-bottom: 30px;
+  border: 1px solid var(--light-green);
 }
 </style>

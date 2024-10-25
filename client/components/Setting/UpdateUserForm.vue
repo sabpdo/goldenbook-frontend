@@ -22,7 +22,6 @@ async function updatePassword() {
 </script>
 
 <template>
-  <h2>Update user details</h2>
   <form @submit.prevent="updateUsername" class="pure-form">
     <fieldset>
       <input type="text" placeholder="New username" v-model="username" required />

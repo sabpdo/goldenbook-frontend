@@ -10,7 +10,8 @@ const getAuthorizedActions = async () => {
   let query = { username: props.authorizee };
   try {
     const denied_actions = await fetchy(`/api/authorize/deny/user`, "GET", { query });
-    allowedActions.value = allPossibleActions.filter((action) => !denied_actions.includes(action));
+    const denied_action_list = denied_actions.map((action: { denied_action: string }) => action.denied_action);
+    allowedActions.value = allPossibleActions.filter((action) => !denied_action_list.includes(action));
   } catch {
     return;
   }
@@ -27,10 +28,10 @@ const toggleAuthorization = async (username: string, action: string, allowed: bo
         body: { username },
       });
     }
-    await getAuthorizedActions();
   } catch {
     return;
   }
+  await getAuthorizedActions();
 };
 
 onBeforeMount(async () => {
@@ -40,21 +41,42 @@ onBeforeMount(async () => {
 </script>
 
 <template>
-  <h1>Manage Your Authorizee's Actions</h1>
-  <ul>
-    <li v-for="action in allowedActions" :key="action">
-      {{ action }}
-      <label class="switch">
-        <input type="checkbox" :checked="allowedActions.includes(action)" @change="toggleAuthorization(props.authorizee.value, action, allowedActions.includes(action))" />
-        <span class="slider"></span>
-      </label>
-    </li>
-  </ul>
+  <h3>Manage Your Authorizee's Actions</h3>
+  <div v-if="loaded" class="authorizee-container">
+    <label class="name">{{ props.authorizee }}</label>
+    <ul>
+      <li v-for="action in allPossibleActions" :key="action" class="action-item">
+        <span class="action-label">{{ action }}</span>
+        <label class="switch">
+          <input type="checkbox" :checked="allowedActions.includes(action)" @change="toggleAuthorization(props.authorizee, action, allowedActions.includes(action))" />
+          <span class="slider"></span>
+        </label>
+      </li>
+    </ul>
+  </div>
 </template>
 
 <style scoped>
-h1 {
+h3 {
   text-align: center;
+  color: var(--nav-green);
+  margin-bottom: 20px;
+}
+
+.name {
+  color: var(--nav-green);
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+.authorizee-container {
+  margin-bottom: 30px;
+  max-width: 600px;
+}
+
+h2 {
+  margin: 10px 0;
+  color: #333;
 }
 
 ul {
@@ -67,7 +89,22 @@ li {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 200px;
+}
+
+.action-item {
+  padding: 10px;
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  transition: background-color 0.2s;
+}
+
+.action-item:hover {
+  background-color: #f1f1f1;
+}
+
+.action-label {
+  font-weight: bold;
 }
 
 .switch {

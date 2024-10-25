@@ -20,6 +20,7 @@ void updateSession();
 h1 {
   text-align: center;
 }
+
 main {
   padding-bottom: 10vh;
 }

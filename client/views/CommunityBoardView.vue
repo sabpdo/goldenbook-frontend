@@ -16,6 +16,7 @@ import PostListComponent from "@/components/Post/PostListComponent.vue";
 h1 {
   text-align: center;
 }
+
 p {
   text-align: center;
   font-size: 1.25rem;

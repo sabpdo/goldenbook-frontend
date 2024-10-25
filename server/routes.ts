@@ -93,6 +93,7 @@ class Routes {
    * @returns the created post
    */
   @Router.post("/posts")
+  @Router.validate(z.object({ content: z.string() }))
   async createPost(session: SessionDoc, content: string, options?: PostOptions) {
     const user = Sessioning.getUser(session);
     await Authorizing.assertActionIsAllowed(user, "Post");
@@ -137,7 +138,7 @@ class Routes {
   }
 
   @Router.get("/messages")
-  @Router.validate(z.object({ currentUser: z.string().optional(), otherUser: z.string().optional() }))
+  @Router.validate(z.object({ currentUser: z.string(), otherUser: z.string() }))
   async getMessages(currentUser: string, otherUser: string) {
     const currentUser_id = (await Authing.getUserByUsername(currentUser))._id;
     const otherUser_id = (await Authing.getUserByUsername(otherUser))._id;
@@ -167,7 +168,6 @@ class Routes {
       await Recording.create(sender, "Message", new Date());
     }
     const created = await Messaging.send(receiver, sender, content);
-    console.log(created);
     return { msg: created.msg, message: await Responses.message(created.message) };
   }
 
@@ -592,10 +592,10 @@ class Routes {
    * @param session the session of the user
    * @param username the username to revoke control from, the user must already be allowed to authorize actions on the target username's account
    */
-  @Router.delete("/authorize/control")
+  @Router.delete("/authorize/control/:username")
   async revokeControl(session: SessionDoc, username: string) {
-    const authorizer = Sessioning.getUser(session);
-    const authorizee = (await Authing.getUserByUsername(username))._id;
+    const authorizee = Sessioning.getUser(session);
+    const authorizer = (await Authing.getUserByUsername(username))._id;
     await Authorizing.assertIsAuthorizer(authorizer, authorizee);
     return { msg: (await Authorizing.removeAuthorizer(authorizer, authorizee)).msg, authorizer: await Authing.idToUsername(authorizer), authorizee: await Authing.idToUsername(authorizee) };
   }
