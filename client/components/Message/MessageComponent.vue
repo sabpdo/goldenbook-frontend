@@ -3,10 +3,13 @@ import { useUserStore } from "@/stores/user";
 import { formatDate } from "@/utils/formatDate";
 import { storeToRefs } from "pinia";
 import { fetchy } from "../../utils/fetchy";
+import { ref, defineProps, defineEmits } from "vue";
+import MessageDeleteConfirmationComponent from "./MessageDeleteConfirmationComponent.vue";
 
 const props = defineProps(["message", "toUser"]);
 const emit = defineEmits(["editMessage", "refreshMessages"]);
 const { currentUsername } = storeToRefs(useUserStore());
+const showModal = ref(false);
 
 const deleteMessage = async () => {
   try {
@@ -33,7 +36,8 @@ const deleteMessage = async () => {
       >
         {{ props.message.content }}
       </p>
-      <button class="delete-btn" @click="deleteMessage" aria-label="Delete message" v-if="props.message.from == currentUsername">🗑️</button>
+      <button class="delete-btn" @click="showModal = true" aria-label="Delete message" v-if="props.message.from == currentUsername">🗑️</button>
+      <MessageDeleteConfirmationComponent :isVisible="showModal" @confirm="deleteMessage" @cancel="showModal = false" />
     </div>
     <div class="base">
       <article class="timestamp">

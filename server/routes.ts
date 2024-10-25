@@ -93,7 +93,6 @@ class Routes {
    * @returns the created post
    */
   @Router.post("/posts")
-  @Router.validate(z.object({ content: z.string() }))
   async createPost(session: SessionDoc, content: string, options?: PostOptions) {
     const user = Sessioning.getUser(session);
     await Authorizing.assertActionIsAllowed(user, "Post");

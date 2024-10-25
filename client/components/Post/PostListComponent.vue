@@ -75,6 +75,7 @@ p,
 .row {
   margin: 0 auto;
   max-width: 60em;
+  padding-bottom: 50px;
 }
 
 article {

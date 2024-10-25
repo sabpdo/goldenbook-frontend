@@ -25,13 +25,17 @@ async function getMessages(user: string) {
   let messageResults;
   if (!toUser.value) {
     toast.value = { message: "Please select a user to chat with", style: "error" };
+    setTimeout(() => {
+      toast.value = null;
+    }, 1000);
+  } else {
+    try {
+      messageResults = await fetchy("/api/messages", "GET", { query });
+    } catch {
+      return;
+    }
+    messages.value = messageResults;
   }
-  try {
-    messageResults = await fetchy("/api/messages", "GET", { query });
-  } catch {
-    return;
-  }
-  messages.value = messageResults;
 }
 
 onBeforeMount(async () => {

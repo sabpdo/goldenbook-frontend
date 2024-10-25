@@ -25,7 +25,7 @@ const emptyForm = () => {
 
 <template>
   <form @submit.prevent="createNudge(time, props.toUser)">
-    <label for="time">Nudge At Time:</label>
+    <label for="time">Send Social Reminder at Time:</label>
     <input id="time" v-model="time" type="datetime-local" required />
     <button type="submit">Send</button>
   </form>
