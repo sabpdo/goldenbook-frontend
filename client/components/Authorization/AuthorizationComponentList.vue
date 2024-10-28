@@ -15,7 +15,6 @@ const { isLoggedIn } = storeToRefs(useUserStore());
 const getAuthorizations = async () => {
   try {
     const response = await fetchy("/api/authorize/control", "GET");
-    console.log(response);
     authorizees.value = response.authorizees;
     authorizers.value = response.authorizers;
   } catch {

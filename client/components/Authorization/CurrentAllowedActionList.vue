@@ -4,12 +4,13 @@ import { fetchy } from "../../utils/fetchy";
 
 const allowedActions = ref([""]);
 const loaded = ref(false);
-const allPossibleActions = ["Post", "Mesage", "Record", "Nudge"];
+const allPossibleActions = ["Post", "Message", "Record", "Nudge"];
 
 const getAuthorizedActions = async () => {
   try {
     const denied_actions = await fetchy("/api/authorize", "GET");
-    allowedActions.value = allPossibleActions.filter((action) => !denied_actions.includes(action));
+    const deniedActionNames = denied_actions.map((action: any) => action.denied_action);
+    allowedActions.value = allPossibleActions.filter((action: string) => !deniedActionNames.includes(action));
   } catch {
     return;
   }
