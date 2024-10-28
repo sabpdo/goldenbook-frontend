@@ -32,6 +32,7 @@ onBeforeMount(async () => {
   <section v-if="loaded && isLoggedIn">
     <CurrentAllowedActionList />
     <div v-if="authorizees.length !== 0" class="container">
+      <h3>Manage Your Authorizee's Actions</h3>
       <section v-for="authorizee in authorizees" :key="authorizee" class="authorizees-container">
         <AuthorizationActionForm :authorizee="authorizee" />
       </section>

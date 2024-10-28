@@ -41,7 +41,6 @@ onBeforeMount(async () => {
 </script>
 
 <template>
-  <h3>Manage Your Authorizee's Actions</h3>
   <div v-if="loaded" class="authorizee-container">
     <label class="name">{{ props.authorizee }}</label>
     <ul>
